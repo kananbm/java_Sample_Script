@@ -15,13 +15,13 @@ describe('Sample Application homepage', () => {
         return page.get();
     });
 
-    //it('test top image validness', () => {
-    //    expect(page.getImageSrc()).toContain(imageSrc);
-    //});
-
-    it('test title validness', () => {
-        expect(page.getTitle()).toMatch(title);
+    it('test top image validness', () => {
+        expect(page.getImageSrc()).toContain(imageSrc);
     });
+
+    //it('test title validness', () => {
+    //    expect(page.getTitle()).toMatch(title);
+    //});
 
     //it('test message validness', () => {
     //    expect(page.getMessage()).toMatch(message);
