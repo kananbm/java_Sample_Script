@@ -5,9 +5,9 @@ import {SampleApplicationPage} from './sampleApplication.po';
 describe('Sample Application homepage', () => {
     let page: SampleApplicationPage;
 
-    //let imageSrc: string = "people.png";
+    let imageSrc: string = "people.png";
     let title: string = "CA Continuous Delivery Director";
-    //let message: string = "You deployed the sample application. Next thing to do is run some tests. Follow the 'Getting Started' to see how.";
+    let message: string = "You deployed the sample application. Next thing to do is run some tests. Follow the 'Getting Started' to see how.";
 
     beforeAll(() => {
         browser.ignoreSynchronization = true;
