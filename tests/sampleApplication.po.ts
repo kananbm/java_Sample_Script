@@ -17,7 +17,7 @@ export class SampleApplicationPage {
     getImage(): ElementFinder {
         return this.image;
     }
-
+/*
     getImageSrc(): Promise<string> {
         return this.getImage().getAttribute('src');
     }
@@ -29,4 +29,5 @@ export class SampleApplicationPage {
     getMessage(): Promise<string> {
         return this.message.getText();
     }
+    */
 }
