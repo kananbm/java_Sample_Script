@@ -19,13 +19,13 @@ describe('Sample Application homepage', () => {
         expect(page.getImageSrc()).toContain(imageSrc);
     });
 
-    //it('test title validness', () => {
-    //    expect(page.getTitle()).toMatch(title);
-    //});
+    it('test title validness', () => {
+        expect(page.getTitle()).toMatch(title);
+    });
 
-    //it('test message validness', () => {
-    //    expect(page.getMessage()).toMatch(message);
-    //});
+    it('test message validness', () => {
+        expect(page.getMessage()).toMatch(message);
+    });
 
     afterAll(() => {
         browser.ignoreSynchronization = false;
