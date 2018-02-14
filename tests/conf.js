@@ -15,7 +15,7 @@ exports.config = {
         name: 'Sample App Test'
     },
     specs: [ 'spec.ts' ],
-    seleniumAddress: 'http://localhost:4444',
+    seleniumAddress: 'http://localhost:4444/wd/hub',
 
     // You could set no globals to true to avoid jQuery '$' and protractor '$'
     // collisions on the global namespace.
