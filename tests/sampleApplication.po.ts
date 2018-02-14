@@ -9,7 +9,7 @@ export class SampleApplicationPage {
     image = element(by.tagName('img'));
     title = element(by.tagName('h5'));
     message = element(by.tagName('h2'));
-
+    System.out.println(ElementFinder);
     get() {
         browser.get(TEST_URL);
     }
