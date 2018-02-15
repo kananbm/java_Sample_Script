@@ -5,7 +5,7 @@ import {SampleApplicationPage} from './sampleApplication.po';
 describe('Sample Application homepage', () => {
     let page: SampleApplicationPage;
 
-      let imageSrc: string = "people.png";
+      let imageSrc: string = "https://demo.cyclos.org/content/images/currentConfiguration/SYSTEM_LOGO?mod=1498899439344";
   //  let title: string = "Mock Trading - Online Futures Trading Simulator";
   //  let message: string = "Kanna";
 
