@@ -8,7 +8,9 @@ export class SampleApplicationPage {
     // nameInput = element(by.model('yourName'));
   //  image = element(by.tagName('img'));
   //  title = element(by.tagName('title'));
-    message = element(by.tagName('h5'));
+   // message = element(by.tagName('h5'));
+    
+    message = element(by.Xpath('//*[@class="inputField medium"'));
    
     get() {
         browser.get(TEST_URL);
