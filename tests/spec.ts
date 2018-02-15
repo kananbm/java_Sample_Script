@@ -6,8 +6,8 @@ describe('Sample Application homepage', () => {
     let page: SampleApplicationPage;
 
  //   let imageSrc: string = "people.png";
-    let title: string = "Mock Trading - Online Futures Trading Simulator";
- //   let message: string = "You deployed the sample application. Next thing to do is run some tests. Follow the 'Getting Started' to see how.";
+  //  let title: string = "Mock Trading - Online Futures Trading Simulator";
+    let message: string = "Kanna";
 
     beforeAll(() => {
         browser.ignoreSynchronization = true;
@@ -18,16 +18,16 @@ describe('Sample Application homepage', () => {
   /*  it('test top image validness', () => {
         expect(page.getImageSrc()).toContain(imageSrc);
     });
-    */
+    
 
     it('test title validness', () => {
         expect(page.getTitle()).toMatch(title);
     });
-/*
+*/
     it('test message validness', () => {
         expect(page.getMessage()).toMatch(message);
     });
-*/
+
     afterAll(() => {
         browser.ignoreSynchronization = false;
     });
