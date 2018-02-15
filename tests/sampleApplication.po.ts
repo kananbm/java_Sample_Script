@@ -6,14 +6,14 @@ import {TEST_URL} from "./test.config";
 
 export class SampleApplicationPage {
     // nameInput = element(by.model('yourName'));
-    image = element(by.tagName('img'));
-    title = element(by.tagName('h5'));
-    message = element(by.tagName('h2'));
+  //  image = element(by.tagName('img'));
+    title = element(by.tagName('title'));
+  //  message = element(by.tagName('h2'));
    
     get() {
         browser.get(TEST_URL);
     }
-
+/*
     getImage(): ElementFinder {
         return this.image;
     }
@@ -21,13 +21,13 @@ export class SampleApplicationPage {
     getImageSrc(): Promise<string> {
         return this.getImage().getAttribute('src');
     }
-
+*/
     getTitle(): Promise<string> {
         return this.title.getText();
     }
-
+/*
     getMessage(): Promise<string> {
         return this.message.getText();
     }
-    
+  */  
 }
