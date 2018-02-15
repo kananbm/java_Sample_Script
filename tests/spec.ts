@@ -15,10 +15,10 @@ describe('Sample Application homepage', () => {
         return page.get();
     });
 
-  /*  it('test top image validness', () => {
+   it('test top image validness', () => {
         expect(page.getImageSrc()).toContain(imageSrc);
     });
-    
+   /* 
 
     it('test title validness', () => {
         expect(page.getTitle()).toMatch(title);
