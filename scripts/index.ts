@@ -1,62 +1,93 @@
-import {ElementHelper, ProtractorBrowser} from './browser';
-import {ElementArrayFinder, ElementFinder} from './element';
-import {ProtractorExpectedConditions} from './expectedConditions';
-import {ProtractorBy} from './locators';
-import {PluginConfig, ProtractorPlugin} from './plugins';
-import {Ptor} from './ptor';
-import {Runner} from './runner';
+export * from './attachSession';
+export * from './browserStack';
+export * from './direct';
+export * from './driverProvider';
+export * from './hosted';
+export * from './local';
+export * from './mock';
+export * from './sauce';
 
-// Re-export selenium-webdriver types.
-export {ActionSequence, Browser, Builder, Button, Capabilities, Capability, error, EventEmitter, FileDetector, Key, logging, promise, Session, until, WebDriver, WebElement, WebElementPromise} from 'selenium-webdriver';
-// Re-export public types.
-export {ElementHelper, ProtractorBrowser} from './browser';
-export {Config} from './config';
-export {ElementArrayFinder, ElementFinder} from './element';
-export {ProtractorExpectedConditions} from './expectedConditions';
-export {ProtractorBy} from './locators';
-export {Ptor} from './ptor';
 
-export type Runner = Runner;
-export type PluginConfig = PluginConfig;
-export type ProtractorPlugin = ProtractorPlugin;
+import {AttachSession} from './attachSession';
+import {BrowserStack} from './browserStack';
+import {DriverProvider} from './driverProvider';
+import {Direct} from './direct';
+import {Hosted} from './hosted';
+import {Local} from './local';
+import {Mock} from './mock';
+import {Sauce} from './sauce';
 
-export let utils = {
-  firefox: require('selenium-webdriver/firefox'),
-  http: require('selenium-webdriver/http'),
-  remote: require('selenium-webdriver/remote')
+import {Config} from '../config';
+import {Logger} from '../logger';
+
+let logger = new Logger('driverProviders');
+
+export let buildDriverProvider = (config: Config): DriverProvider => {
+  let driverProvider: DriverProvider;
+
+  if (config.directConnect) {
+    driverProvider = new Direct(config);
+    logWarnings('directConnect', config);
+  } else if (config.seleniumAddress) {
+    if (config.seleniumSessionId) {
+      driverProvider = new AttachSession(config);
+      logWarnings('attachSession', config);
+    } else {
+      driverProvider = new Hosted(config);
+      logWarnings('hosted', config);
+    }
+  } else if (config.browserstackUser && config.browserstackKey) {
+    driverProvider = new BrowserStack(config);
+    logWarnings('browserStack', config);
+  } else if (config.sauceUser && config.sauceKey) {
+    driverProvider = new Sauce(config);
+    logWarnings('sauce', config);
+  } else if (config.seleniumServerJar) {
+    driverProvider = new Local(config);
+    logWarnings('local', config);
+  } else if (config.mockSelenium) {
+    driverProvider = new Mock(config);
+    logWarnings('mock', config);
+  } else {
+    driverProvider = new Local(config);
+    logWarnings('local', config);
+  }
+  return driverProvider;
 };
 
-export let Command = require('selenium-webdriver/lib/command').Command;
-export let CommandName = require('selenium-webdriver/lib/command').Name;
+export let logWarnings = (providerType: string, config: Config): void => {
 
-// Export API instances based on the global Protractor object.
-// We base this on NodeJS `global` because we do not want to mask
-// with a different instance of Protractor if the module is
-// installed both globally and locally.
-
-// Because these properties are set dynamically by the runner in setupGlobals_, they are not
-// guaranteed to be created at import time. Also, the browser object can change if browser.reset()
-// is called. Thus, we export these as properties so they will be resolved dynamically.
-export declare let protractor: Ptor;
-Object.defineProperty(exports, 'protractor', {get: () => (global as any)['protractor']});
-
-function registerGlobal(name: string) {
-  Object.defineProperty(
-      exports, name, {get: () => exports.protractor ? exports.protractor[name] : undefined});
-}
-
-export declare let browser: ProtractorBrowser;
-export declare let $: (search: string) => ElementFinder;
-export declare let $$: (search: string) => ElementArrayFinder;
-export declare let element: ElementHelper;
-export declare let By: ProtractorBy;
-export declare let by: ProtractorBy;
-export declare let ExpectedConditions: ProtractorExpectedConditions;
-
-registerGlobal('browser');
-registerGlobal('$');
-registerGlobal('$$');
-registerGlobal('element');
-registerGlobal('By');
-registerGlobal('by');
-registerGlobal('ExpectedConditions');
+  let warnInto = 'Using driver provider ' + providerType +
+      ', but also found extra driver provider parameter(s): ';
+  let warnList: string[] = [];
+  if ('directConnect' !== providerType && config.directConnect) {
+    warnList.push('directConnect');
+  }
+  if ('attachSession' !== providerType && 'hosted' !== providerType && config.seleniumAddress) {
+    warnList.push('seleniumAddress');
+  }
+  if ('attachSession' !== providerType && config.seleniumSessionId) {
+    warnList.push('seleniumSessionId');
+  }
+  if ('browserStack' !== providerType && config.browserstackUser) {
+    warnList.push('browserstackUser');
+  }
+  if ('browserStack' !== providerType && config.browserstackKey) {
+    warnList.push('browserstackKey');
+  }
+  if ('sauce' !== providerType && config.sauceUser) {
+    warnList.push('sauceUser');
+  }
+  if ('sauce' !== providerType && config.sauceKey) {
+    warnList.push('sauceKey');
+  }
+  if ('local' !== providerType && config.seleniumServerJar) {
+    warnList.push('seleniumServerJar');
+  }
+  if ('mock' !== providerType && config.mockSelenium) {
+    warnList.push('mockSelenium');
+  }
+  if (warnList.length !== 0) {
+    logger.warn(warnInto + warnList.join(', '));
+  }
+};
