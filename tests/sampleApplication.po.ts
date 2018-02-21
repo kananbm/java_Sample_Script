@@ -14,15 +14,14 @@ export class SampleApplicationPage {
         browser.get(TEST_URL);
     }
 
-  
-  getImage(): ElementFinder {
+    getImage(): ElementFinder {
         return this.image;
     }
 
     getImageSrc(): Promise<string> {
         return this.getImage().getAttribute('src');
     }
-/*
+
     getTitle(): Promise<string> {
         return this.title.getText();
     }
@@ -30,5 +29,4 @@ export class SampleApplicationPage {
     getMessage(): Promise<string> {
         return this.message.getText();
     }
- */
 }
